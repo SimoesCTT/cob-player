@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer Crop Circle Ring -->
+    <path
+        android:strokeColor="#FFE082"
+        android:strokeWidth="1.2"
+        android:fillColor="#00000000"
+        android:pathData="M54,12 A42,42 0,1,1 53.9,12 Z" />
+
+    <!-- Intermediate Geometric Mandala / Crop Circle Mesh Layers -->
+    <path
+        android:strokeColor="#FFC107"
+        android:strokeWidth="1.0"
+        android:fillColor="#00000000"
+        android:pathData="M54,18 A36,36 0,1,1 53.9,18 Z" />
+
+    <path
+        android:strokeColor="#FFB300"
+        android:strokeWidth="0.8"
+        android:fillColor="#00000000"
+        android:pathData="M54,24 A30,30 0,1,1 53.9,24 Z" />
+
+    <!-- Concentric Inner Ripples -->
+    <path
+        android:strokeColor="#FFE082"
+        android:strokeWidth="0.8"
+        android:fillColor="#00000000"
+        android:pathData="M54,32 A22,22 0,1,1 53.9,32 Z" />
+    <path
+        android:strokeColor="#FFC107"
+        android:strokeWidth="0.8"
+        android:fillColor="#00000000"
+        android:pathData="M54,38 A16,16 0,1,1 53.9,38 Z" />
+
+    <!-- Intersecting Crop Circle Rays / Geometry Lines -->
+    <path
+        android:strokeColor="#FF8F00"
+        android:strokeWidth="0.8"
+        android:fillColor="#00000000"
+        android:pathData="M54,12 L54,96 M12,54 L96,54 M24,24 L84,84 M24,84 L84,24" />
+
+    <!-- Central Play Button Container / Enclosure -->
+    <path
+        android:fillColor="#3E2723"
+        android:strokeColor="#FFC107"
+        android:strokeWidth="1.5"
+        android:pathData="M54,42 C60,42 66,45 70,54 C66,63 60,66 54,66 C48,66 42,63 38,54 C42,45 48,42 54,42 Z" />
+
+    <!-- Play Triangle Symbol -->
+    <path
+        android:fillColor="#FFE082"
+        android:pathData="M49,47 L49,61 L61,54 Z" />
+</vector>

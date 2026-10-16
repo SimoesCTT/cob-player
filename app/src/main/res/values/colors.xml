@@ -1,0 +1,18 @@
+<resources>
+    <color name="cob_dark_soil">#2D1B0E</color>
+    <color name="cob_husk_bg">#3E2723</color>
+    <color name="cob_husk_light">#5D4037</color>
+
+    <color name="cob_amber">#FFC107</color>
+    <color name="cob_golden_yellow">#FFE082</color>
+    <color name="cob_deep_orange">#FF8F00</color>
+    <color name="cob_toasted">#8D6E63</color>
+    <color name="cob_husk_green">#7CB342</color>
+
+    <color name="cob_text_primary">#FFF8E1</color>
+    <color name="cob_text_secondary">#FFE082</color>
+    <color name="cob_text_muted">#BCAAA4</color>
+
+    <color name="cob_scrim_top">#B32D1B0E</color>
+    <color name="cob_scrim_bottom">#CC2D1B0E</color>
+</resources>

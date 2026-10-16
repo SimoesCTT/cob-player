@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.CobPlayer" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/cob_amber</item>
+        <item name="colorOnPrimary">@color/cob_dark_soil</item>
+        <item name="colorPrimaryContainer">@color/cob_husk_bg</item>
+        <item name="colorSecondary">@color/cob_golden_yellow</item>
+        <item name="colorOnSecondary">@color/cob_dark_soil</item>
+        <item name="android:colorBackground">@color/cob_dark_soil</item>
+        <item name="colorSurface">@color/cob_husk_bg</item>
+        <item name="colorOnSurface">@color/cob_text_primary</item>
+        <item name="colorSurfaceVariant">@color/cob_husk_light</item>
+        <item name="android:statusBarColor">@color/cob_dark_soil</item>
+        <item name="android:navigationBarColor">@color/cob_dark_soil</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

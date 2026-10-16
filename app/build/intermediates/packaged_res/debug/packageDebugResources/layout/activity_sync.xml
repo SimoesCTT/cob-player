@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/cob_dark_soil">
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+
+            <ImageButton android:id="@+id/btn_back"
+                android:layout_width="40dp" android:layout_height="40dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_cob_seek_back"
+                android:contentDescription="@string/back" />
+
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:layout_marginStart="12dp"
+                android:text="Cross-device sync"
+                android:textColor="@color/cob_golden_yellow"
+                android:textSize="20sp" android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Save your playback positions to a WebDAV server and load them on any device."
+            android:textColor="@color/cob_text_muted" android:textSize="14sp" />
+
+        <LinearLayout style="@style/CobSettingsRow"
+            android:id="@+id/row_configure">
+            <LinearLayout style="@style/CobSettingsRowText">
+                <TextView style="@style/CobSettingsTitle" android:text="Configure server" />
+                <TextView style="@style/CobSettingsSubtitle" android:text="URL, username, password" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" android:text="Server URL"
+            android:textColor="@color/cob_amber" android:textSize="13sp" />
+        <TextView android:id="@+id/status_url"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/cob_text_primary" android:textSize="14sp" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" android:text="Last sync"
+            android:textColor="@color/cob_amber" android:textSize="13sp" />
+        <TextView android:id="@+id/status_last_sync"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textColor="@color/cob_text_primary" android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_test"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Test connection"
+            android:textColor="@color/cob_dark_soil"
+            app:backgroundTint="@color/cob_amber"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_push"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Push snapshot"
+            android:textColor="@color/cob_dark_soil"
+            app:backgroundTint="@color/cob_amber"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_pull"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pull snapshot"
+            android:textColor="@color/cob_dark_soil"
+            app:backgroundTint="@color/cob_amber"
+            xmlns:app="http://schemas.android.com/apk/res-auto" />
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:name=".CobApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.CobPlayer"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true">
+
+        <activity android:name=".ui.MainActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.browser.FolderBrowserActivity"
+            android:exported="false" android:parentActivityName=".ui.MainActivity" />
+
+        <activity android:name=".ui.NetworkServersActivity"
+            android:exported="false" android:parentActivityName=".ui.MainActivity" />
+
+        <activity android:name=".ui.NetworkBrowserActivity"
+            android:exported="false" android:parentActivityName=".ui.MainActivity" />
+
+        <activity android:name=".ui.NetworkStreamsActivity"
+            android:exported="false" android:parentActivityName=".ui.MainActivity" />
+
+        <activity android:name=".ui.PlaylistDetailActivity"
+            android:exported="false" android:parentActivityName=".ui.MainActivity" />
+
+        <activity android:name=".ui.SyncActivity"
+            android:exported="false" android:parentActivityName=".ui.MainActivity" />
+
+        <activity android:name=".ui.SettingsActivity"
+            android:exported="false" android:parentActivityName=".ui.MainActivity" />
+
+        <activity android:name=".ui.PlayerActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:supportsPictureInPicture="true"
+            android:theme="@style/Theme.CobPlayer">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".service.PlaybackService"
+            android:foregroundServiceType="mediaPlayback" android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
+            <receiver
+            android:name=".widget.CobWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_cob_info" />
+        </receiver>
+            <meta-data
+            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="androidx.media3.cast.DefaultCastOptionsProvider" />
+
+        <receiver android:name="androidx.mediarouter.media.MediaTransferReceiver" />
+    </application>
+</manifest>
