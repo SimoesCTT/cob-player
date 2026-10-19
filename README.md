@@ -42,7 +42,9 @@ Cob Player is a player from 2026 that plays everything **and respects modern And
 
 ### Playback
 - Universal codecs via NextLib FFmpeg — AC3, EAC3, DTS, TrueHD, MLP, ALAC
+- 10-bit HEVC (x265 Main 10) software decoding via NextLib media3ext 0.16.0 — plays on hardware that rejects the profile, including midrange Android 11 devices
 - Hardware + software decoding
+- Automatic decoder fallback: hardware MediaCodec first, FFmpeg software decoder when hardware rejects the codec
 - Adaptive streaming (HLS, DASH)
 - Network protocols: HTTP, HTTPS, FTP, SFTP, SMB2/3, RTSP, MMS
 - Audio focus management, headphone unplug pause
@@ -150,8 +152,8 @@ Tech Stack
 Layer	Technology
 Language	Kotlin 2.1
 Build	Gradle 8.9, AGP 8.7.2
-Playback	AndroidX Media3 ExoPlayer 1.8.0
-Codecs	NextLib FFmpeg (AC3, EAC3, DTS, TrueHD, MLP, ALAC)
+Playback	AndroidX Media3 ExoPlayer 1.11.1
+Codecs	NextLib media3ext 1.11.1-0.16.0 (AC3, EAC3, DTS, TrueHD, MLP, ALAC, HEVC Main 10)
 Session	Media3 MediaSessionService
 Cast	Google Cast SDK 21.5 + MediaRouter
 Network	smbj 0.13 (SMB2/3), Apache Commons Net (FTP), JSch (SFTP)
@@ -183,3 +185,14 @@ Americo N. F. Simoes — @SimoesCTT
 Physicist | Cybersecurity Researcher | Author
 
 🌽 Every seed of media, played.
+
+## Integration with Spore
+
+Cob Player accepts http:// and https:// intent filters so that other apps — including Spore — can hand it a streaming URL. Combined with Spore's local HTTP torrent server, this enables:
+
+- Watch-while-downloading: Spore serves torrent bytes over http://127.0.0.1:8421/stream/..., Cob Player opens it and plays
+- Seek support: Cob Player sends HTTP Range requests, Spore serves the requested byte range
+- 10-bit HEVC playback: NextLib's software decoder handles profiles that the device's hardware MediaCodec rejects
+
+The renderer config (DefaultRenderersFactory with EXTENSION_RENDERER_MODE_ON and setEnableDecoderFallback(true)) means hardware decoding is tried first for performance, and FFmpeg software decoding is the fallback when hardware fails. This is the configuration that makes 10-bit HEVC play on devices that lack native support for the profile.
+

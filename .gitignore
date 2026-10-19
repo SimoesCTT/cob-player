@@ -29,3 +29,4 @@ cob-release.jks
 secrets.properties
 build.log
 *.log
+app/build/
