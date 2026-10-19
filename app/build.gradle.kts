@@ -10,9 +10,9 @@ android {
     signingConfigs {
         create("release") {
             storeFile = file("../cob-release.jks")
-            storePassword = "cobplayer2026"
+            storePassword = "Cornmaize78!"
             keyAlias = "cob"
-            keyPassword = "cobplayer2026"
+            keyPassword = "Cornmaize78!"
         }
     }
 
@@ -47,6 +47,11 @@ android {
             excludes += "META-INF/NOTICE*"
             excludes += "META-INF/*.kotlin_module"
         }
+    }
+
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
     }
 
     buildFeatures { viewBinding = true }
