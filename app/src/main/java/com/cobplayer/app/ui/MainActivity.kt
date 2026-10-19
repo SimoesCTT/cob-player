@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var gridAdapter: MediaGridAdapter
     private lateinit var continueAdapter: ContinueWatchingAdapter
     private var currentView: String = VIEW_VIDEOS
+    private var currentFolderBucket: Long = -1L
+    private var currentFolderIsAudio: Boolean = false
     private var searchQuery: String = ""
     private var usingGrid: Boolean = false
 
@@ -209,6 +211,28 @@ class MainActivity : AppCompatActivity() {
             VIEW_RECENT -> RecentStore.load(this).map {
                 MediaEntry(it.uri, it.title, 0L, 0L, false)
             }
+            VIEW_FOLDER -> {
+                val result = mutableListOf<MediaEntry>()
+                val collectionUri = if (currentFolderIsAudio) MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                                    else MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                val idColumn = if (currentFolderIsAudio) MediaStore.Audio.Media._ID else MediaStore.Video.Media._ID
+                val bucketColumn = if (currentFolderIsAudio) MediaStore.Audio.Media.BUCKET_ID else MediaStore.Video.Media.BUCKET_ID
+                val nameColumn = if (currentFolderIsAudio) MediaStore.Audio.Media.DISPLAY_NAME else MediaStore.Video.Media.DISPLAY_NAME
+                contentResolver.query(
+                    collectionUri, arrayOf(idColumn, nameColumn),
+                    "$bucketColumn = ?", arrayOf(currentFolderBucket.toString()), null
+                )?.use { c ->
+                    val idIdx = c.getColumnIndexOrThrow(idColumn)
+                    val nameIdx = c.getColumnIndexOrThrow(nameColumn)
+                    while (c.moveToNext()) {
+                        val id = c.getLong(idIdx)
+                        val name = c.getString(nameIdx) ?: "Unknown"
+                        val itemUri = Uri.withAppendedPath(collectionUri, id.toString()).toString()
+                        result.add(MediaEntry(itemUri, name, 0L, 0L, currentFolderIsAudio, isPlaylist = false))
+                    }
+                }
+                result
+            }
             else -> emptyList()
         }
 
@@ -361,33 +385,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openFolder(bucketId: Long, isAudio: Boolean) {
-        val ids = mutableListOf<Long>()
-        val collectionUri = if (isAudio) MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-                            else MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-        val idColumn = if (isAudio) MediaStore.Audio.Media._ID else MediaStore.Video.Media._ID
-        val bucketColumn = if (isAudio) MediaStore.Audio.Media.BUCKET_ID else MediaStore.Video.Media.BUCKET_ID
-
-        contentResolver.query(
-            collectionUri, arrayOf(idColumn),
-            "$bucketColumn = ?", arrayOf(bucketId.toString()), null
-        )?.use { c ->
-            val idIdx = c.getColumnIndexOrThrow(idColumn)
-            while (c.moveToNext()) ids.add(c.getLong(idIdx))
-        }
-
-        if (ids.isEmpty()) return
-        val playlistUris = ArrayList<String>()
-        val playlistTitles = ArrayList<String>()
-        ids.forEach { id ->
-            val itemUri = Uri.withAppendedPath(collectionUri, id.toString()).toString()
-            playlistUris.add(itemUri)
-            playlistTitles.add(itemUri.substringAfterLast('/'))
-        }
-        startActivity(Intent(this, PlayerActivity::class.java)
-            .setData(Uri.parse(playlistUris[0]))
-            .putExtra("title", playlistTitles[0])
-            .putStringArrayListExtra("queue_uris", playlistUris)
-            .putStringArrayListExtra("queue_titles", playlistTitles))
+        currentFolderBucket = bucketId
+        currentFolderIsAudio = isAudio
+        currentView = VIEW_FOLDER
+        val name = if (isAudio) getString(R.string.tab_audio) else getString(R.string.tab_videos)
+        binding.screenTitle.text = name
+        loadMedia()
     }
 
     private fun queryShows(): List<MediaEntry> {
@@ -604,6 +607,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val VIEW_VIDEOS = "videos"
+    private const val VIEW_FOLDER = "folder"
         private const val VIEW_AUDIO = "audio"
         private const val VIEW_PLAYLISTS = "playlists"
         private const val VIEW_RECENT = "recent"
