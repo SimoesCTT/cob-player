@@ -7,6 +7,15 @@ android {
     namespace = "com.cobplayer.app"
     compileSdk = 36
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("../cob-release.jks")
+            storePassword = "cobplayer2026"
+            keyAlias = "cob"
+            keyPassword = "cobplayer2026"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.cobplayer.app"
         minSdk = 24
@@ -17,6 +26,7 @@ android {
 
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
