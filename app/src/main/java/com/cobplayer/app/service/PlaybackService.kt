@@ -10,6 +10,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.DefaultRenderersFactory
+import io.github.anilbeesetti.nextlib.media3ext.ffdecoder.NextRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.util.EventLogger
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
@@ -38,8 +39,7 @@ class PlaybackService : MediaSessionService() {
 
         // NextLib FFmpeg renderers for AC3/DTS/TrueHD/ALAC support
         val renderersFactory: androidx.media3.exoplayer.RenderersFactory =
-            DefaultRenderersFactory(this)
-                .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+            NextRenderersFactory(this)
                 .setEnableDecoderFallback(true)
 
         val exo = ExoPlayer.Builder(this, renderersFactory)
